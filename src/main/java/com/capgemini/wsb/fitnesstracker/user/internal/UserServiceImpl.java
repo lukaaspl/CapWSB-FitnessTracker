@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-class UserServiceImpl implements UserService, UserProvider {
+public class UserServiceImpl implements UserService, UserProvider {
 
     private final UserRepository userRepository;
 
@@ -36,6 +36,27 @@ class UserServiceImpl implements UserService, UserProvider {
         }
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public User updateUser(final Long userId, final UserDto userDto) {
+        log.info("Updating User with ID {}", userId);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        user.setFirstName(userDto.firstName());
+        user.setLastName(userDto.lastName());
+        user.setBirthdate(userDto.birthdate());
+        user.setEmail(userDto.email());
+
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUser(final Long userId) {
+        log.info("Deleting User with ID {}", userId);
+        userRepository.deleteById(userId);
     }
 
     @Override
@@ -61,26 +82,6 @@ class UserServiceImpl implements UserService, UserProvider {
     @Override
     public List<User> findAllUsersOlderThanDate(final LocalDate date) {
         return userRepository.findAllOlderThanDate(date);
-    }
-
-    @Override
-    public User updateUser(Long userId, UserDto userDto) {
-        log.info("Updating User with ID {}", userId);
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
-
-        user.setFirstName(userDto.firstName());
-        user.setLastName(userDto.lastName());
-        user.setBirthdate(userDto.birthdate());
-        user.setEmail(userDto.email());
-
-        return userRepository.save(user);
-    }
-
-    @Override
-    public void deleteUser(final Long userId) {
-        log.info("Deleting User with ID {}", userId);
-        userRepository.deleteById(userId);
     }
 
 }

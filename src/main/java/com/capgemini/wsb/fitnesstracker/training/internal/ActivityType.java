@@ -1,13 +1,20 @@
 package com.capgemini.wsb.fitnesstracker.training.internal;
 
-// TODO : JavaDoc
+/**
+ * Represents the types of activities that can be tracked in the fitness
+ * tracker.
+ */
 public enum ActivityType {
 
     RUNNING("Running"),
+
     CYCLING("Cycling"),
+
     WALKING("Walking"),
+
     SWIMMING("Swimming"),
-    TENNIS("Tenis");
+
+    TENNIS("Tennis");
 
     private final String displayName;
 
@@ -15,6 +22,11 @@ public enum ActivityType {
         this.displayName = displayName;
     }
 
+    /**
+     * Returns the display name of the activity type.
+     *
+     * @return the display name
+     */
     public String getDisplayName() {
         return displayName;
     }
