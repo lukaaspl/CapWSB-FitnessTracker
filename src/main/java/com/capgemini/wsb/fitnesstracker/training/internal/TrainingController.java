@@ -50,7 +50,7 @@ class TrainingController {
     }
 
     @PostMapping
-    public ResponseEntity<TrainingDto> createTraining(@RequestBody InputTrainingDto inputTrainingDto)
+    public ResponseEntity<TrainingDto> addTraining(@RequestBody InputTrainingDto inputTrainingDto)
             throws InterruptedException {
 
         Training createdTraining = trainingService.createTraining(inputTrainingDto);
