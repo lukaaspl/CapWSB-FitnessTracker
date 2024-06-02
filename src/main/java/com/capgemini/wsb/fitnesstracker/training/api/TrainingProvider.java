@@ -1,11 +1,12 @@
 package com.capgemini.wsb.fitnesstracker.training.api;
 
-import com.capgemini.wsb.fitnesstracker.training.internal.ActivityType;
-import com.capgemini.wsb.fitnesstracker.user.api.User;
-
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import com.capgemini.wsb.fitnesstracker.training.internal.ActivityType;
+import com.capgemini.wsb.fitnesstracker.user.api.User;
 
 public interface TrainingProvider {
 
@@ -50,4 +51,13 @@ public interface TrainingProvider {
      * @return A list of all trainings with the specified activity type
      */
     List<Training> findTrainingsByActivityType(ActivityType activityType);
+
+    /**
+     * Retrieves all trainings that are between two given dates.
+     *
+     * @param startDate the start date
+     * @param endDate   the end date
+     * @return A list of all trainings that are between the two given dates
+     */
+    List<Training> findTrainingsBetweenDates(Date startDate, Date endDate);
 }

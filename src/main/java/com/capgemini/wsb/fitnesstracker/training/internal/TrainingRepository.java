@@ -44,4 +44,18 @@ interface TrainingRepository extends JpaRepository<Training, Long> {
                 .filter(training -> training.getActivityType().equals(activityType))
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Query searching trainings between two dates.
+     * 
+     * @param startDate the start date
+     * @param endDate   the end date
+     * @return a list of trainings that are between the two specified dates
+     */
+    default List<Training> findAllBetweenDates(Date startDate, Date endDate) {
+        return findAll().stream()
+                .filter(training -> training.getStartTime().after(startDate) && training.getEndTime().before(endDate))
+                .collect(Collectors.toList());
+    }
+
 }

@@ -94,4 +94,8 @@ public class TrainingServiceImpl implements TrainingService, TrainingProvider {
         return trainingRepository.findAllByActivityType(activityType);
     }
 
+    @Override
+    public List<Training> findTrainingsBetweenDates(Date startDate, Date endDate) {
+        return trainingRepository.findAllBetweenDates(startDate, endDate);
+    }
 }
