@@ -1,5 +1,6 @@
 package com.capgemini.wsb.fitnesstracker.loader;
 
+import com.capgemini.wsb.fitnesstracker.statistics.api.Statistics;
 import com.capgemini.wsb.fitnesstracker.training.api.Training;
 import com.capgemini.wsb.fitnesstracker.training.internal.ActivityType;
 import com.capgemini.wsb.fitnesstracker.user.api.User;
@@ -22,8 +23,11 @@ import static java.time.LocalDate.now;
 import static java.util.Objects.isNull;
 
 /**
- * Sample init data loader. If the application is run with `loadInitialData` profile, then on application startup it will fill the database with dummy data,
- * for the manual testing purposes. Loader is triggered by {@link ContextRefreshedEvent } event
+ * Sample init data loader. If the application is run with `loadInitialData`
+ * profile, then on application startup it will fill the database with dummy
+ * data,
+ * for the manual testing purposes. Loader is triggered by
+ * {@link ContextRefreshedEvent } event
  */
 @Component
 @Profile("loadInitialData")
@@ -37,9 +41,12 @@ class InitialDataLoader {
     @Autowired
     private JpaRepository<Training, Long> trainingRepository;
 
+    @Autowired
+    private JpaRepository<Statistics, Long> statisticsRepository;
+
     @EventListener
     @Transactional
-    @SuppressWarnings({"squid:S1854", "squid:S1481", "squid:S1192", "unused"})
+    @SuppressWarnings({ "squid:S1854", "squid:S1481", "squid:S1192", "unused" })
     public void loadInitialData(ContextRefreshedEvent event) {
         verifyDependenciesAutowired();
 
@@ -47,16 +54,16 @@ class InitialDataLoader {
 
         List<User> sampleUserList = generateSampleUsers();
         List<Training> sampleTrainingList = generateTrainingData(sampleUserList);
-
+        List<Statistics> sampleStatisticsList = generateStatisticsData(sampleUserList);
 
         log.info("Finished loading initial data");
     }
 
     private User generateUser(String name, String lastName, int age) {
         User user = new User(name,
-                             lastName,
-                             now().minusYears(age),
-                             "%s.%s@domain.com".formatted(name, lastName));
+                lastName,
+                now().minusYears(age),
+                "%s.%s@domain.com".formatted(name, lastName));
         return userRepository.save(user);
     }
 
@@ -84,65 +91,65 @@ class InitialDataLoader {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             Training training1 = new Training(users.get(0),
-                                              sdf.parse("2024-01-19 08:00:00"),
-                                              sdf.parse("2024-01-19 09:30:00"),
-                                              ActivityType.RUNNING,
-                                              10.5,
-                                              8.2);
+                    sdf.parse("2024-01-19 08:00:00"),
+                    sdf.parse("2024-01-19 09:30:00"),
+                    ActivityType.RUNNING,
+                    10.5,
+                    8.2);
             Training training2 = new Training(users.get(1),
-                                              sdf.parse("2024-01-18 15:30:00"),
-                                              sdf.parse("2024-01-18 17:00:00"),
-                                              ActivityType.CYCLING,
-                                              25.0,
-                                              18.5);
+                    sdf.parse("2024-01-18 15:30:00"),
+                    sdf.parse("2024-01-18 17:00:00"),
+                    ActivityType.CYCLING,
+                    25.0,
+                    18.5);
             Training training3 = new Training(users.get(2),
-                                              sdf.parse("2024-01-17 07:45:00"),
-                                              sdf.parse("2024-01-17 09:00:00"),
-                                              ActivityType.WALKING,
-                                              5.2,
-                                              5.8);
+                    sdf.parse("2024-01-17 07:45:00"),
+                    sdf.parse("2024-01-17 09:00:00"),
+                    ActivityType.WALKING,
+                    5.2,
+                    5.8);
             Training training4 = new Training(users.get(3),
-                                              sdf.parse("2024-01-16 18:00:00"),
-                                              sdf.parse("2024-01-16 19:30:00"),
-                                              ActivityType.RUNNING,
-                                              12.3,
-                                              9.0);
+                    sdf.parse("2024-01-16 18:00:00"),
+                    sdf.parse("2024-01-16 19:30:00"),
+                    ActivityType.RUNNING,
+                    12.3,
+                    9.0);
             Training training5 = new Training(users.get(4),
-                                              sdf.parse("2024-01-15 12:30:00"),
-                                              sdf.parse("2024-01-15 13:45:00"),
-                                              ActivityType.CYCLING,
-                                              18.7,
-                                              15.3);
+                    sdf.parse("2024-01-15 12:30:00"),
+                    sdf.parse("2024-01-15 13:45:00"),
+                    ActivityType.CYCLING,
+                    18.7,
+                    15.3);
             Training training6 = new Training(users.get(5),
-                                              sdf.parse("2024-01-14 09:00:00"),
-                                              sdf.parse("2024-01-14 10:15:00"),
-                                              ActivityType.WALKING,
-                                              3.5,
-                                              4.0);
+                    sdf.parse("2024-01-14 09:00:00"),
+                    sdf.parse("2024-01-14 10:15:00"),
+                    ActivityType.WALKING,
+                    3.5,
+                    4.0);
             Training training7 = new Training(users.get(6),
-                                              sdf.parse("2024-01-13 16:45:00"),
-                                              sdf.parse("2024-01-13 18:30:00"),
-                                              ActivityType.RUNNING,
-                                              15.0,
-                                              10.8);
+                    sdf.parse("2024-01-13 16:45:00"),
+                    sdf.parse("2024-01-13 18:30:00"),
+                    ActivityType.RUNNING,
+                    15.0,
+                    10.8);
             Training training8 = new Training(users.get(7),
-                                              sdf.parse("2024-01-12 11:30:00"),
-                                              sdf.parse("2024-01-12 12:45:00"),
-                                              ActivityType.CYCLING,
-                                              22.5,
-                                              17.2);
+                    sdf.parse("2024-01-12 11:30:00"),
+                    sdf.parse("2024-01-12 12:45:00"),
+                    ActivityType.CYCLING,
+                    22.5,
+                    17.2);
             Training training9 = new Training(users.get(8),
-                                              sdf.parse("2024-01-11 07:15:00"),
-                                              sdf.parse("2024-01-11 08:30:00"),
-                                              ActivityType.WALKING,
-                                              4.2,
-                                              4.5);
+                    sdf.parse("2024-01-11 07:15:00"),
+                    sdf.parse("2024-01-11 08:30:00"),
+                    ActivityType.WALKING,
+                    4.2,
+                    4.5);
             Training training10 = new Training(users.get(9),
-                                               sdf.parse("2024-01-10 14:00:00"),
-                                               sdf.parse("2024-01-10 15:15:00"),
-                                               ActivityType.RUNNING,
-                                               11.8,
-                                               8.5);
+                    sdf.parse("2024-01-10 14:00:00"),
+                    sdf.parse("2024-01-10 15:15:00"),
+                    ActivityType.RUNNING,
+                    11.8,
+                    8.5);
 
             trainingData.add(training1);
             trainingData.add(training2);
@@ -162,6 +169,41 @@ class InitialDataLoader {
 
         return trainingData;
     }
+
+    private List<Statistics> generateStatisticsData(List<User> users) {
+        List<Statistics> statisticsData = new ArrayList<>();
+
+        try {
+            Statistics statistics1 = new Statistics(users.get(0), 5, 45.0, 350);
+            Statistics statistics2 = new Statistics(users.get(1), 3, 60.0, 500);
+            Statistics statistics3 = new Statistics(users.get(2), 7, 30.0, 250);
+            Statistics statistics4 = new Statistics(users.get(3), 4, 55.0, 400);
+            Statistics statistics5 = new Statistics(users.get(4), 6, 40.0, 300);
+            Statistics statistics6 = new Statistics(users.get(5), 8, 25.0, 200);
+            Statistics statistics7 = new Statistics(users.get(6), 2, 70.0, 600);
+            Statistics statistics8 = new Statistics(users.get(7), 9, 20.0, 150);
+            Statistics statistics9 = new Statistics(users.get(8), 1, 75.0, 650);
+            Statistics statistics10 = new Statistics(users.get(9), 10, 15.0, 100);
+
+            statisticsData.add(statistics1);
+            statisticsData.add(statistics2);
+            statisticsData.add(statistics3);
+            statisticsData.add(statistics4);
+            statisticsData.add(statistics5);
+            statisticsData.add(statistics6);
+            statisticsData.add(statistics7);
+            statisticsData.add(statistics8);
+            statisticsData.add(statistics9);
+            statisticsData.add(statistics10);
+
+            statisticsData.forEach(statistics -> statisticsRepository.save(statistics));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return statisticsData;
+    }
+
     private void verifyDependenciesAutowired() {
         if (isNull(userRepository)) {
             throw new IllegalStateException("Initial data loader was not autowired correctly " + this);

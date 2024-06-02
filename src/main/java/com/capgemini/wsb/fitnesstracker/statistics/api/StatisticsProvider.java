@@ -1,16 +1,22 @@
 package com.capgemini.wsb.fitnesstracker.statistics.api;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface StatisticsProvider {
 
     /**
-     * Retrieves a statistics based on their ID.
-     * If the user with given ID is not found, then {@link Optional#empty()} will be returned.
+     * Retrieves all statistics.
      *
-     * @param statisticsId id of the statistics to be searched
-     * @return An {@link Optional} containing the located Statistics, or {@link Optional#empty()} if not found
+     * @return A list of all statistics
      */
-    Optional<Statistics> getStatistics(Long statisticsId);
+    List<Statistics> findAllStatistics();
+
+    /**
+     * Retrieves a statistics based on the owner ID.
+     * 
+     * @param userId id of the user
+     * @return A list of all statistics for the user
+     */
+    List<Statistics> findStatisticsByUserId(Long userId);
 
 }
